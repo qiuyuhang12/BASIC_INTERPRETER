@@ -18,7 +18,6 @@ Statement::Statement() = default;
 
 Statement::~Statement() = default;
 
-//todo
 void Rem::execute(EvalState &state, Program &program) {
     program.line_now = program.getNextLineNumber(program.line_now);
 }
@@ -26,21 +25,6 @@ void Rem::execute(EvalState &state, Program &program) {
 
 void Let::execute(EvalState &state, Program &program) {
     program.line_now = program.getNextLineNumber(program.line_now);
-/*    TokenScanner scanner;
-*    scanner.ignoreWhitespace();
-*    scanner.scanNumbers();
-*    scanner.setInput(val);
-*    std::string num_only;
-*    while (scanner.hasMoreTokens()) {
-*        std::string s = scanner.nextToken();
-*        if (scanner.getTokenType(s) != WORD) {
-*            num_only += s;
-*        } else {
-*            int value = state.getValue(s);
-*            std::string value_string = integerToString(value);
-*            num_only += value_string;
-*        }
-    }*/
     state.setValue(var.name, val->eval(state));
 }
 
@@ -114,14 +98,8 @@ void Goto::execute(EvalState &state, Program &program) {
 void If::execute(EvalState &state, Program &program) {
     int left, right;
     TokenScanner t;
-//    if (t.getTokenType(lhs) == NUMBER) {
-//        left = stringToInteger(lhs);
-//    } else left = state.getValue(lhs);
-//    if (t.getTokenType(rhs) == NUMBER) {
-//        right = stringToInteger(rhs);
-//    } else right = state.getValue(rhs);
-    left=lhs->eval(state);
-    right=rhs->eval(state);
+    left = lhs->eval(state);
+    right = rhs->eval(state);
     bool cmp = false;
     if ((op == "=" && left == right) || (op == "<" && left < right) || (op == ">" && left > right))cmp = true;
     if (cmp) {

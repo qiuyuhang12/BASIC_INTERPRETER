@@ -82,7 +82,6 @@ class Let : public Statement {
 public:
     void execute(EvalState &state, Program &program) override;
 
-//private:
     IdentifierExp var;
     std::shared_ptr<Expression> val;
 };
@@ -91,7 +90,6 @@ class Print : public Statement {
 public:
     void execute(EvalState &state, Program &program) override;
 
-//private:
     std::shared_ptr<Expression> var;
 };
 
@@ -99,7 +97,6 @@ class Input : public Statement {
 public:
     void execute(EvalState &state, Program &program) override;
 
-//private:
     IdentifierExp var;
 };
 
@@ -112,7 +109,6 @@ class Goto : public Statement {
 public:
     void execute(EvalState &state, Program &program) override;
 
-//private:
     int line = 0;
 };
 
@@ -120,8 +116,7 @@ class If : public Statement {
 public:
     void execute(EvalState &state, Program &program) override;
 
-//private:
-    std::shared_ptr<Expression>lhs,rhs;
+    std::shared_ptr<Expression> lhs, rhs;
     std::string op;
     int line_number = 0;
 };

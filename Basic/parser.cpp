@@ -41,7 +41,6 @@ std::shared_ptr<Expression> readE(TokenScanner &scanner, int prec) {
         if (newPrec <= prec) break;
         std::shared_ptr<Expression> rhs = readE(scanner, newPrec);
         exp = std::make_shared<CompoundExp>(token, exp, rhs);
-//??
     }
     scanner.saveToken(token);
     return exp;
@@ -60,7 +59,6 @@ std::shared_ptr<Expression> readT(TokenScanner &scanner) {
     if (type == WORD) return std::make_shared<IdentifierExp>(token);
     if (type == NUMBER) return std::make_shared<ConstantExp>(stringToInteger(token));
     if (token == "-") return std::make_shared<CompoundExp>(token, std::make_shared<ConstantExp>(0), readE(scanner));
-//??
     if (token != "(") error("Illegal term in expression");
     std::shared_ptr<Expression> exp = readE(scanner);
     if (scanner.nextToken() != ")") {

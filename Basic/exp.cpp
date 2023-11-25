@@ -12,93 +12,6 @@
  * ------------------------------------------
  * The Expression class declares no instance variables and needs no code.
  */
-//std::shared_ptr<Expression> formula(std::string fml) {
-//
-//    while (fml[0] == ' ') {
-//        fml = fml.substr(1);
-//    }
-//    TokenScanner scanner;
-//    scanner.ignoreWhitespace();
-//    scanner.scanNumbers();
-//    scanner.setInput(fml);
-//    return parseExp(scanner);
-//    std::string first = scanner.nextToken();
-//    if (scanner.getTokenType(first) == NUMBER && !scanner.hasMoreTokens()) {
-//        std::shared_ptr<ConstantExp> tem=std::make_shared<ConstantExp>();
-//        tem->value=stringToInteger(first);
-//        return tem;
-//    }
-//    if (scanner.getTokenType(first) == WORD && !scanner.hasMoreTokens()) {
-//        std::shared_ptr<IdentifierExp> tem=std::make_shared<IdentifierExp>();
-//        tem->name=(first);
-//        return tem;
-//    }
-//
-////    std::shared_ptr<CompoundExp> exp;
-//    if (first == "(") {
-//        int num = 1;
-//        int position = 1;
-//        while (num > 0) {
-//            if (position >= fml.size()) {
-//                error("SYNTAX ERROR");
-//            }
-//            if (fml[position] == '(') {
-//                num += 1;
-//            } else if (fml[position] == ')') {
-//                num -= 1;
-//            }
-//            position += 1;
-//        }
-//        std::string lhs_string = fml.substr(1, position - 2);
-////        if (position > fml.size() || position == fml.size() - 1) {
-////            error("SYNTAX ERROR");
-////        }
-//        std::string op_with_rhs = fml.substr(position);
-//        TokenScanner scanner_rhs;
-//        scanner_rhs.ignoreWhitespace();
-//        scanner_rhs.scanNumbers();
-//        scanner_rhs.setInput(op_with_rhs);
-//
-//        if (!scanner_rhs.hasMoreTokens()) {
-//            return formula(lhs_string);
-//        }
-//        std::string op = scanner_rhs.nextToken();
-//        if (op != "+" && op != "-" && op != "*" && op != "/") {
-//            error("SYNTAX ERROR");
-//        }
-//        if (!scanner_rhs.hasMoreTokens()) {
-//            error("SYNTAX ERROR");
-//        }
-//        std::string rhs_string = fml.substr(position + 1);
-//        std::shared_ptr<CompoundExp> exp1=std::make_shared<CompoundExp>();
-////        ???
-//        exp1->op = op;
-//        exp1->lhs = formula(lhs_string);
-//        exp1->rhs = formula(rhs_string);
-//        return exp1;
-////        CompoundExp a (op, formula(lhs_string),formula(rhs_string));
-//    } else if (scanner.getTokenType(first) == WORD || scanner.getTokenType(first) == NUMBER) {
-//        std::string op = scanner.nextToken();
-//        if (op != "+" && op != "-" && op != "*" && op != "/") {
-//            error("SYNTAX ERROR");
-//        }
-//        if (!scanner.hasMoreTokens()) {
-//            error("SYNTAX ERROR");
-//        }
-//        char op_char = op[0];
-//        int op_position = fml.find(op_char);
-//        std::string rhs = fml.substr(op_position + 1);
-//        while (rhs[0] == ' ') {
-//            rhs = rhs.substr(1);
-//        }
-//        std::shared_ptr<CompoundExp> exp1=std::make_shared<CompoundExp>();
-//        exp1->lhs = formula(first);
-//        exp1->rhs = formula(rhs);
-//        exp1->op = op;
-//        return exp1;
-//    }
-//    error("SYNTAX ERROR");
-//}
 
 Expression::Expression() = default;
 
@@ -180,8 +93,6 @@ CompoundExp::CompoundExp(std::string op, std::shared_ptr<Expression> lhs, std::s
 }
 
 CompoundExp::~CompoundExp() {
-    //delete lhs;
-    //delete rhs;
 }
 
 /*
@@ -200,7 +111,6 @@ int CompoundExp::eval(EvalState &state) {
         if (lhs->getType() == IDENTIFIER && lhs->toString() == "LET")
             error("SYNTAX ERROR");
         int val = rhs->eval(state);
-//        state.setValue(((IdentifierExp *) lhs)->getName(std::string()), val);
         state.setValue((lhs)->getName(std::string()), val);
         return val;
     }

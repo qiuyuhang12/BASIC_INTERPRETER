@@ -70,7 +70,7 @@ std::string TokenScanner::nextToken() {
         std::string token = cp->str;
         savedTokens = cp->link;
         delete cp;
-        next_token_of_last_time=token;
+        next_token_of_last_time = token;
         return token;
     }
     while (true) {
@@ -97,22 +97,22 @@ std::string TokenScanner::nextToken() {
             ch = '/';
         }
         if (ch == EOF) {
-            next_token_of_last_time="";
+            next_token_of_last_time = "";
             return "";
         }
         if ((ch == '"' || ch == '\'') && scanStringsFlag) {
             isp->unget();
-            next_token_of_last_time=scanString();
+            next_token_of_last_time = scanString();
             return next_token_of_last_time;
         }
         if (isdigit(ch) && scanNumbersFlag) {
             isp->unget();
-            next_token_of_last_time=scanNumber();
+            next_token_of_last_time = scanNumber();
             return next_token_of_last_time;
         }
         if (isWordCharacter(ch)) {
             isp->unget();
-            next_token_of_last_time=scanWord();
+            next_token_of_last_time = scanWord();
             return next_token_of_last_time;
         }
         std::string op = std::string(1, ch);
@@ -125,7 +125,7 @@ std::string TokenScanner::nextToken() {
             isp->unget();
             op.erase(op.length() - 1, 1);
         }
-        next_token_of_last_time=op;
+        next_token_of_last_time = op;
         return op;
     }
 }

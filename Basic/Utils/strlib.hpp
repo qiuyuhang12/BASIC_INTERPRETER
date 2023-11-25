@@ -11,8 +11,8 @@
 #include <iostream>
 #include <string>
 #include "tokenScanner.hpp"
-//#include "/run/media/qiuyuhang/linuxdata/cpp_file/Basic-Interpreter-2023/Basic/exp.hpp"
 #include <memory>
+
 /*
  * Function: integerToString
  * Usage: string s = integerToString(n);
@@ -21,7 +21,6 @@
  * For example, calling <code>integerToString(123)</code> returns
  * the string <code>"123"</code>.
  */
-//std::shared_ptr<Expression> formula (std::string);
 std::string integerToString(int n);
 
 /*

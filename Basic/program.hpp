@@ -14,11 +14,15 @@
 #include <unordered_map>
 #include "statement.hpp"
 #include <memory>
+
 int find_cmp(const std::string &in);
+
 enum commands {
     REM, LET, PRINT, INPUT, END, GOTO, IF, RUN, LIST, CLEAR, QUIT, HELP
 };
+
 std::shared_ptr<Expression> formula(std::string fml);
+
 class Statement;
 
 /*
@@ -144,8 +148,6 @@ public:
 
     int getNextLineNumber(int lineNumber);
 
-    //more func to add
-    //todo
     void List();
 
     void Clear();
@@ -159,8 +161,6 @@ public:
 
 private:
 
-    // Fill this in with whatever types and instance variables you need
-    //todo
     std::map<int, std::string> list;
     std::map<int, std::shared_ptr<Statement> > run;
     EvalState &state;

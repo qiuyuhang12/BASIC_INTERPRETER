@@ -13,7 +13,7 @@
 #include "Utils/error.hpp"
 #include "evalstate.hpp"
 #include "Utils/strlib.hpp"
-//#include "parser.hpp"
+
 /*
  * Type: ExpressionType
  * --------------------
@@ -121,9 +121,12 @@ public:
  * The constructor initializes a new integer constant expression
  * to the given value.
  */
-    explicit ConstantExp()=default;
+    explicit ConstantExp() = default;
+
     explicit ConstantExp(int value);
-    ~ConstantExp()override=default;
+
+    ~ConstantExp() override = default;
+
 /*
  * Prototypes for the virtual methods
  * ----------------------------------
@@ -136,7 +139,9 @@ public:
     std::string toString() override;
 
     ExpressionType getType() override;
+
     std::string getName(std::string) override;
+
 /*
  * Method: getValue
  * Usage: int value = ((ConstantExp *) exp)->getValue();
@@ -147,9 +152,8 @@ public:
 
     int getValue(int i);
 
-//private:
 
-    int value=0;
+    int value = 0;
 
 };
 
@@ -170,7 +174,8 @@ public:
  * The constructor initializes a new identifier expression
  * for the variable named by name.
  */
-    explicit IdentifierExp()=default;
+    explicit IdentifierExp() = default;
+
     explicit IdentifierExp(std::string name);
 
 /*
@@ -180,7 +185,7 @@ public:
  * base class and don't require additional documentation.
  */
 
-    int eval(EvalState &state)override;
+    int eval(EvalState &state) override;
 
     std::string toString() override;
 
@@ -194,9 +199,7 @@ public:
  * to an object known to be an IdentifierExp.
  */
 
-    std::string getName(std::string string)override;
-
-//private:
+    std::string getName(std::string string) override;
 
     std::string name;
 
@@ -221,7 +224,8 @@ public:
  * which is composed of the operator (op) and the left and
  * right subexpression (lhs and rhs).
  */
-    CompoundExp()=default;
+    CompoundExp() = default;
+
     CompoundExp(std::string op, std::shared_ptr<Expression> lhs, std::shared_ptr<Expression> rhs);
 
 /*
@@ -238,14 +242,6 @@ public:
     std::string toString() override;
 
     ExpressionType getType() override;
-//
-//    virtual ~CompoundExp();
-//
-//    virtual int eval(EvalState &state);
-//
-//    virtual std::string toString();
-//
-//    virtual ExpressionType getType();
 
 /*
  * Methods: getOp, getLHS, getRHS
@@ -262,8 +258,8 @@ public:
     std::shared_ptr<Expression> getLHS();
 
     std::shared_ptr<Expression> getRHS();
+
     std::string getName(std::string) override;
-//private:
 
     std::string op;
     std::shared_ptr<Expression> lhs, rhs;
