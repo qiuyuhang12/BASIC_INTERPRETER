@@ -3,9 +3,10 @@
  * --------------
  * This file acts as the interface to the parser module.
  */
-
+#pragma once
 #ifndef _parser_h
 #define _parser_h
+
 
 #include <string>
 #include <iostream>
@@ -25,7 +26,7 @@
  * whitespace and to scan numbers.
  */
 
-Expression *parseExp(TokenScanner &scanner);
+std::shared_ptr<Expression> parseExp(TokenScanner &scanner);
 
 /*
  * Function: readE
@@ -36,7 +37,7 @@ Expression *parseExp(TokenScanner &scanner);
  * defaults to 0, which means that the function reads the entire expression.
  */
 
-Expression *readE(TokenScanner &scanner, int prec = 0);
+std::shared_ptr<Expression> readE(TokenScanner &scanner, int prec = 0);
 
 /*
  * Function: readT
@@ -46,7 +47,7 @@ Expression *readE(TokenScanner &scanner, int prec = 0);
  * identifier, or a parenthesized subexpression.
  */
 
-Expression *readT(TokenScanner &scanner);
+std::shared_ptr<Expression> readT(TokenScanner &scanner);
 
 /*
  * Function: precedence

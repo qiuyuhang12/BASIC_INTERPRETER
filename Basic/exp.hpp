@@ -5,7 +5,7 @@
  * which allows the client to represent and manipulate simple
  * binary expression trees.
  */
-
+#pragma once
 #ifndef _exp_h
 #define _exp_h
 
@@ -13,7 +13,7 @@
 #include "Utils/error.hpp"
 #include "evalstate.hpp"
 #include "Utils/strlib.hpp"
-
+//#include "parser.hpp"
 /*
  * Type: ExpressionType
  * --------------------
@@ -101,6 +101,7 @@ public:
 
     virtual ExpressionType getType() = 0;
 
+    virtual std::string getName(std::string) = 0;
 };
 
 /*
@@ -120,9 +121,9 @@ public:
  * The constructor initializes a new integer constant expression
  * to the given value.
  */
-
-    ConstantExp(int value);
-
+    explicit ConstantExp()=default;
+    explicit ConstantExp(int value);
+    ~ConstantExp()override=default;
 /*
  * Prototypes for the virtual methods
  * ----------------------------------
@@ -130,12 +131,12 @@ public:
  * base class and don't require additional documentation.
  */
 
-    virtual int eval(EvalState &state);
+    int eval(EvalState &state) override;
 
-    virtual std::string toString();
+    std::string toString() override;
 
-    virtual ExpressionType getType();
-
+    ExpressionType getType() override;
+    std::string getName(std::string) override;
 /*
  * Method: getValue
  * Usage: int value = ((ConstantExp *) exp)->getValue();
@@ -144,11 +145,11 @@ public:
  * only to an object known to be a ConstantExp.
  */
 
-    int getValue();
+    int getValue(int i);
 
-private:
+//private:
 
-    int value;
+    int value=0;
 
 };
 
@@ -169,8 +170,8 @@ public:
  * The constructor initializes a new identifier expression
  * for the variable named by name.
  */
-
-    IdentifierExp(std::string name);
+    explicit IdentifierExp()=default;
+    explicit IdentifierExp(std::string name);
 
 /*
  * Prototypes for the virtual methods
@@ -179,11 +180,11 @@ public:
  * base class and don't require additional documentation.
  */
 
-    virtual int eval(EvalState &state);
+    int eval(EvalState &state)override;
 
-    virtual std::string toString();
+    std::string toString() override;
 
-    virtual ExpressionType getType();
+    ExpressionType getType() override;
 
 /*
  * Method: getName
@@ -193,9 +194,9 @@ public:
  * to an object known to be an IdentifierExp.
  */
 
-    std::string getName();
+    std::string getName(std::string string)override;
 
-private:
+//private:
 
     std::string name;
 
@@ -220,8 +221,8 @@ public:
  * which is composed of the operator (op) and the left and
  * right subexpression (lhs and rhs).
  */
-
-    CompoundExp(std::string op, Expression *lhs, Expression *rhs);
+    CompoundExp()=default;
+    CompoundExp(std::string op, std::shared_ptr<Expression> lhs, std::shared_ptr<Expression> rhs);
 
 /*
  * Prototypes for the virtual methods
@@ -230,13 +231,21 @@ public:
  * base class and don't require additional documentation.
  */
 
-    virtual ~CompoundExp();
+    ~CompoundExp() override;
 
-    virtual int eval(EvalState &state);
+    int eval(EvalState &state) override;
 
-    virtual std::string toString();
+    std::string toString() override;
 
-    virtual ExpressionType getType();
+    ExpressionType getType() override;
+//
+//    virtual ~CompoundExp();
+//
+//    virtual int eval(EvalState &state);
+//
+//    virtual std::string toString();
+//
+//    virtual ExpressionType getType();
 
 /*
  * Methods: getOp, getLHS, getRHS
@@ -250,15 +259,17 @@ public:
 
     std::string getOp();
 
-    Expression *getLHS();
+    std::shared_ptr<Expression> getLHS();
 
-    Expression *getRHS();
-
-private:
+    std::shared_ptr<Expression> getRHS();
+    std::string getName(std::string) override;
+//private:
 
     std::string op;
-    Expression *lhs, *rhs;
+    std::shared_ptr<Expression> lhs, rhs;
 
 };
+
+std::shared_ptr<Expression> formula(std::string fml);
 
 #endif

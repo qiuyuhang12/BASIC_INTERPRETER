@@ -21,6 +21,7 @@
 #include"parser.hpp"
 #include "Utils/error.hpp"
 #include "Utils/strlib.hpp"
+#include <string>
 
 class Program;
 
@@ -73,6 +74,56 @@ public:
 
 };
 
+class Rem : public Statement {
+    void execute(EvalState &state, Program &program) override;
+};
+
+class Let : public Statement {
+public:
+    void execute(EvalState &state, Program &program) override;
+
+//private:
+    IdentifierExp var;
+    std::shared_ptr<Expression> val;
+};
+
+class Print : public Statement {
+public:
+    void execute(EvalState &state, Program &program) override;
+
+//private:
+    std::shared_ptr<Expression> var;
+};
+
+class Input : public Statement {
+public:
+    void execute(EvalState &state, Program &program) override;
+
+//private:
+    IdentifierExp var;
+};
+
+class End : public Statement {
+public:
+    void execute(EvalState &state, Program &program) override;
+};
+
+class Goto : public Statement {
+public:
+    void execute(EvalState &state, Program &program) override;
+
+//private:
+    int line = 0;
+};
+
+class If : public Statement {
+public:
+    void execute(EvalState &state, Program &program) override;
+
+//private:
+    std::string lhs, rhs, op;
+    int line_number = 0;
+};
 
 /*
  * The remainder of this file must consists of subclass

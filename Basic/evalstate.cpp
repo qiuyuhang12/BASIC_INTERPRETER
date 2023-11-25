@@ -23,17 +23,17 @@ EvalState::~EvalState() {
 }
 
 void EvalState::setValue(std::string var, int value) {
-    if(isDefined(var)) symbolTable[var] = value;
-    else symbolTable.emplace(var,value);
+    if (isDefined(var)) symbolTable[var] = value;
+    else symbolTable.emplace(var, value);
 }
 
 int EvalState::getValue(std::string var) {
-    if(isDefined(var)) return symbolTable[var];
+    if (isDefined(var)) return symbolTable[var];
     else return 0;
 }
 
 bool EvalState::isDefined(std::string var) {
-    return symbolTable.find(var)!=symbolTable.end();
+    return symbolTable.find(var) != symbolTable.end();
 }
 
 void EvalState::Clear() {

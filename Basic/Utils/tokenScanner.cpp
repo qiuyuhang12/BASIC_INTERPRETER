@@ -70,6 +70,7 @@ std::string TokenScanner::nextToken() {
         std::string token = cp->str;
         savedTokens = cp->link;
         delete cp;
+        next_token_of_last_time=token;
         return token;
     }
     while (true) {
@@ -95,18 +96,24 @@ std::string TokenScanner::nextToken() {
             if (ch != EOF) isp->unget();
             ch = '/';
         }
-        if (ch == EOF) return "";
+        if (ch == EOF) {
+            next_token_of_last_time="";
+            return "";
+        }
         if ((ch == '"' || ch == '\'') && scanStringsFlag) {
             isp->unget();
-            return scanString();
+            next_token_of_last_time=scanString();
+            return next_token_of_last_time;
         }
         if (isdigit(ch) && scanNumbersFlag) {
             isp->unget();
-            return scanNumber();
+            next_token_of_last_time=scanNumber();
+            return next_token_of_last_time;
         }
         if (isWordCharacter(ch)) {
             isp->unget();
-            return scanWord();
+            next_token_of_last_time=scanWord();
+            return next_token_of_last_time;
         }
         std::string op = std::string(1, ch);
         while (isOperatorPrefix(op)) {
@@ -118,6 +125,7 @@ std::string TokenScanner::nextToken() {
             isp->unget();
             op.erase(op.length() - 1, 1);
         }
+        next_token_of_last_time=op;
         return op;
     }
 }

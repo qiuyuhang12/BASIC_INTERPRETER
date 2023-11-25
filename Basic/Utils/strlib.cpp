@@ -9,7 +9,6 @@
 #include <iostream>
 #include "error.hpp"
 #include "strlib.hpp"
-
 /* Function prototypes */
 
 /*
@@ -17,7 +16,24 @@
  * ----------------------------------------
  * These functions use the <sstream> library to perform the conversion.
  */
-
+//std::shared_ptr<Expression> formula (std::string fml) {
+//    TokenScanner scanner;
+//    scanner.ignoreWhitespace();
+//    scanner.scanNumbers();
+//    scanner.setInput(fml);
+//    if (scanner.getTokenType(fml)==NUMBER){
+//        std::shared_ptr<ConstantExp> tem;
+//        tem->getValue(stringToInteger(fml));
+//        return tem;
+//    }
+//    if (scanner.getTokenType(fml)==WORD){
+//        std::shared_ptr<IdentifierExp> tem;
+//        tem->getName(fml);
+//        return tem;
+//    }
+//
+//
+//}
 std::string integerToString(int n) {
     std::ostringstream stream;
     stream << n;

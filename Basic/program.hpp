@@ -13,8 +13,12 @@
 #include <set>
 #include <unordered_map>
 #include "statement.hpp"
+#include <memory>
 
-
+enum commands {
+    REM, LET, PRINT, INPUT, END, GOTO, IF, RUN, LIST, CLEAR, QUIT, HELP
+};
+std::shared_ptr<Expression> formula(std::string fml);
 class Statement;
 
 /*
@@ -41,7 +45,7 @@ public:
  * Constructs an empty BASIC program.
  */
 
-    Program();
+    Program(EvalState &);
 
 /*
  * Destructor: ~Program
@@ -72,7 +76,7 @@ public:
  * program in the correct sequence.
  */
 
-    void addSourceLine(int lineNumber, const std::string& line);
+    void addSourceLine(int lineNumber, std::string &line, commands);
 
 /*
  * Method: removeSourceLine
@@ -117,7 +121,7 @@ public:
  * returns NULL.
  */
 
-    Statement *getParsedStatement(int lineNumber);
+    std::shared_ptr<Statement> getParsedStatement(int lineNumber);
 
 /*
  * Method: getFirstLineNumber
@@ -142,11 +146,24 @@ public:
 
     //more func to add
     //todo
+    void List();
+
+    void Clear();
+
+    void Run();
+
+    int line_now = -1;
+    bool end = false;
+
+    void get_state(EvalState &state_in);
 
 private:
 
     // Fill this in with whatever types and instance variables you need
     //todo
+    std::map<int, std::string> list;
+    std::map<int, std::shared_ptr<Statement> > run;
+    EvalState &state;
 };
 
 #endif
