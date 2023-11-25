@@ -14,7 +14,7 @@
 #include <unordered_map>
 #include "statement.hpp"
 #include <memory>
-
+int find_cmp(const std::string &in);
 enum commands {
     REM, LET, PRINT, INPUT, END, GOTO, IF, RUN, LIST, CLEAR, QUIT, HELP
 };

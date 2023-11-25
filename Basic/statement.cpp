@@ -46,7 +46,7 @@ void Let::execute(EvalState &state, Program &program) {
 
 
 void Print::execute(EvalState &state, Program &program) {
-    std::cout << var->eval(state)<<std::endl;
+    std::cout << var->eval(state) << std::endl;
     program.line_now = program.getNextLineNumber(program.line_now);
 }
 
@@ -70,7 +70,7 @@ void Input::execute(EvalState &state, Program &program) {
                 std::cout << ("INVALID NUMBER\n");
                 continue;
             }
-            if (first.find('.')<first.size()){
+            if (first.find('.') < first.size()) {
                 std::cout << ("INVALID NUMBER\n");
                 continue;
             }
@@ -89,7 +89,7 @@ void Input::execute(EvalState &state, Program &program) {
                 std::cout << ("INVALID NUMBER\n");
                 continue;
             }
-            if (second.find('.')<second.size()){
+            if (second.find('.') < second.size()) {
                 std::cout << ("INVALID NUMBER\n");
                 continue;
             }
@@ -114,12 +114,14 @@ void Goto::execute(EvalState &state, Program &program) {
 void If::execute(EvalState &state, Program &program) {
     int left, right;
     TokenScanner t;
-    if (t.getTokenType(lhs) == NUMBER) {
-        left = stringToInteger(lhs);
-    } else left = state.getValue(lhs);
-    if (t.getTokenType(rhs) == NUMBER) {
-        right = stringToInteger(rhs);
-    } else right = state.getValue(rhs);
+//    if (t.getTokenType(lhs) == NUMBER) {
+//        left = stringToInteger(lhs);
+//    } else left = state.getValue(lhs);
+//    if (t.getTokenType(rhs) == NUMBER) {
+//        right = stringToInteger(rhs);
+//    } else right = state.getValue(rhs);
+    left=lhs->eval(state);
+    right=rhs->eval(state);
     bool cmp = false;
     if ((op == "=" && left == right) || (op == "<" && left < right) || (op == ">" && left > right))cmp = true;
     if (cmp) {

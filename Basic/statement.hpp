@@ -121,7 +121,8 @@ public:
     void execute(EvalState &state, Program &program) override;
 
 //private:
-    std::string lhs, rhs, op;
+    std::shared_ptr<Expression>lhs,rhs;
+    std::string op;
     int line_number = 0;
 };
 

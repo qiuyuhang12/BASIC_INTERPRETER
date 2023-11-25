@@ -155,19 +155,35 @@ void processLine(std::string line, Program &program, EvalState &state) {
             if (find_cmp(line)==-1){
                 throw ErrorException("SYNTAX ERROR");
             }
-//            while ()
-            std::string t3 = scanner.nextToken();// x
-            std::string t4 = scanner.nextToken();// <
-            std::string t5 = scanner.nextToken();// y
-            std::string t6 = scanner.nextToken();//then
-            std::string t7 = scanner.nextToken();//9
-            std::string t8 = scanner.nextToken();
-            if ((scanner.getTokenType(t3) != WORD && scanner.getTokenType(t3) != NUMBER) ||
-                (t4 != "<" && t4 != ">" && t4 != "=") ||
-                (scanner.getTokenType(t5) != WORD && scanner.getTokenType(t5) != NUMBER) || t6 != "THEN" ||
-                scanner.getTokenType(t7) != NUMBER || !t8.empty()) {
+            bool find_then= false,find_line= false,no_ap= false;
+            while (scanner.hasMoreTokens()){
+                if (scanner.nextToken()=="THEN"){
+                    find_then= true;
+                    if (scanner.getTokenType(scanner.nextToken())==NUMBER){
+                        find_line= true;
+                        if (!scanner.hasMoreTokens()){
+                            no_ap= true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(!(find_then&&find_line&&no_ap)){
                 throw ErrorException("SYNTAX ERROR");
             }
+//            while ()
+//            std::string t3 = scanner.nextToken();// x
+//            std::string t4 = scanner.nextToken();// <
+//            std::string t5 = scanner.nextToken();// y
+//            std::string t6 = scanner.nextToken();//then
+//            std::string t7 = scanner.nextToken();//9
+//            std::string t8 = scanner.nextToken();
+//            if ((scanner.getTokenType(t3) != WORD && scanner.getTokenType(t3) != NUMBER) ||
+//                (t4 != "<" && t4 != ">" && t4 != "=") ||
+//                (scanner.getTokenType(t5) != WORD && scanner.getTokenType(t5) != NUMBER) || t6 != "THEN" ||
+//                scanner.getTokenType(t7) != NUMBER || !t8.empty()) {
+//                throw ErrorException("SYNTAX ERROR");
+//            }
             program.addSourceLine(line_number, line, IF);
         } else if (second_token.empty()) {
             program.removeSourceLine(line_number);
@@ -256,14 +272,14 @@ void legal(const std::string &word) {
         error("SYNTAX ERROR");
     }
 }
-int find_cmp(const std::string &in){
-    int position=0;
-    while (position<in.size()){
-        char ch=in[position];
-        if (ch=='='||ch=='<'||ch=='>'){
-            return position;
-        }
-        position++;
-    }
-    return -1;
-}
+//int find_cmp(const std::string &in){
+//    int position=0;
+//    while (position<in.size()){
+//        char ch=in[position];
+//        if (ch=='='||ch=='<'||ch=='>'){
+//            return position;
+//        }
+//        position++;
+//    }
+//    return -1;
+//}
